@@ -1,3 +1,10 @@
+<!-- type AccordionPropsType = {
+  children: React.ReactNode;
+  title: string;
+  toggleAccordion: () => void;
+  isAccordionExpanded: boolean;
+}; -->
+
 <!-- # Patterns in react : Compound component -->
 # React design pattern : Compound component
 
@@ -5,6 +12,7 @@
   - What is design pattern?
 - What is compound pattern in react?
 - What problem it's solving?
+  - Problem with accordion component
 - Solution of compound pattern.
   - Make accordion component
   - Styling accordion component
@@ -27,20 +35,21 @@ states from custom hook. so now you can use that hook wherever in your project t
 details.
 
 <!-- Quote -->
-So in above example we have used one of the react design pattern which is **hooks**. here to use 
-users details in other places is the commonly occurring problem. we used **hooks** design pattern to
-solve that problem.
+So in above example we have used one of the react design pattern which is **hooks**. here 
+to use users details in other places is the commonly occurring problem. we used **hooks** design 
+pattern to solve that problem.
 
 ## What is compound pattern react?
+- Compound pattern is a pattern in react where groups of components make one single 
+  component by sharing the state implicitly.
+
+- It's like dropdown component where **select** and **option** component build 
+  **dropdown** component by sharing the state internally.
+
+## What problem it's solving?
+- Below is the example of basic **accordion** component.
 
 ```
-type AccordionPropsType = {
-  children: React.ReactNode;
-  title: string;
-  toggleAccordion: () => void;
-  isAccordionExpanded: boolean;
-};
-
 export const Accordion = ({
   children,
   isAccordionExpanded,
@@ -48,7 +57,7 @@ export const Accordion = ({
   toggleAccordion,
 }: AccordionPropsType) => {
   return (
-    <div className="">
+    <div>
       <div onClick={toggleAccordion} className="">
         {title}
         <button>
