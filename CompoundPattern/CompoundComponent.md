@@ -47,7 +47,8 @@ pattern to solve that problem.
   **dropdown** component by sharing the state internally.
 
 ## What problem it's solving?
-- Below is the example of basic **accordion** component.
+- Usually i used to create a accordion component like this. 
+<!-- - Below is the example of basic **accordion** component. -->
 
 ```
 export const Accordion = ({
@@ -58,14 +59,42 @@ export const Accordion = ({
 }: AccordionPropsType) => {
   return (
     <div>
-      <div onClick={toggleAccordion} className="">
+      <div onClick={toggleAccordion}>
         {title}
         <button>
           <button>{isAccordionExpanded ? "+" : "-"}</button>
         </button>
       </div>
-      {isAccordionExpanded && <div className="">{children}</div>}
+      {isAccordionExpanded && <div>{children}</div>}
     </div>
   );
 };
 ```
+
+```
+<Accordion
+  title="Closed Tickets"
+  toggleAccordion={toggleCloseTicketsAccordion}
+  isAccordionExpanded={isExpandCloseTicketsAccordion}
+> 
+  <p>
+    What is Devin AI software? Devin is a smart tool that helps with coding by itself. It can
+    understand what you want to make, write the code, find and fix errors, and get better over
+    time by learning.
+  </p>
+ </Accordion>
+```
+
+> Can you find the problems in above example?
+- **First problem**: According to how it's rendered if we want to render 10 accordions we need
+  to create 10 different states for each of them as we are passing state and it's handler
+  separately.So it's not **scalable**
+
+- **Second problem**: if we want to change the icon for close and open state of accordion then
+  we can't modify it so first problem is it's not **flexible to change**.
+
+- **Third problem**: if we have some icon or bold text that we want to render it as title then 
+  we can't as we are expecting string. so it's **not scalable and not adaptive for new change**.
+
+
+  
