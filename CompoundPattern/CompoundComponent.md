@@ -11,9 +11,8 @@
 - Introduction
   - What is design pattern?
 - What is compound pattern in react?
-- What problem it's solving?
-  - Problem with accordion component
-- Solution of compound pattern.
+- Identify problems that can be solved using compound pattern
+- Solution through compound pattern.
   - Make accordion component
   - Styling accordion component
 - Pros & Cons
@@ -46,7 +45,7 @@ pattern to solve that problem.
 - It's like dropdown component where **select** and **option** component build 
   **dropdown** component by sharing the state internally.
 
-## What problem it's solving?
+## Identify problems that can be solved using compound pattern. 
 - Usually i used to create a accordion component like this. 
 <!-- - Below is the example of basic **accordion** component. -->
 
@@ -86,6 +85,8 @@ export const Accordion = ({
 ```
 
 > Can you find the problems in above example?
+
+
 - **First problem**: According to how it's rendered if we want to render 10 accordions we need
   to create 10 different states for each of them as we are passing state and it's handler
   separately.So it's not **scalable**
@@ -96,5 +97,42 @@ export const Accordion = ({
 - **Third problem**: if we have some icon or bold text that we want to render it as title then 
   we can't as we are expecting string. so it's **not scalable and not adaptive for new change**.
 
+
+## Solution through compound pattern.
+
+-  You can see we divided our accordion component into three components
+  1. Accordion (Parent) 
+  2. Accordion Trigger (Child) 
+  3. Accordion Content (Child) 
+
+### 1. Accordion component
+
+- First of all we will create AccordionContext. 
+```tsx 
+const AccordionContext = createContext({
+  currentAccordionIndex: 1,
+  accordionHandler: (index: number) => {},
+})
+```
+
+```tsx 
+export const Accordion = ({ children }: { children: ReactNode }) => {
+  const [currentAccordionIndex, setShowAccordionIndex] = useState(1)
+
+  const accordionHandler = (index: number) => {
+    setShowAccordionIndex(index === currentAccordionIndex ? 0 : index)
+  }
+
+  return (
+    <AccordionContext.Provider
+      value={{ currentAccordionIndex, accordionIndexHandler }}
+    >
+      {children}
+    </AccordionContext.Provider>
+  )
+}
+```
+
+<!-- - ![Example](./../../../Pictures/Screenshots/Screenshot%20from%202024-03-19%2023-13-40.png) -->
 
   
