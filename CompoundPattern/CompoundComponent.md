@@ -107,7 +107,11 @@ export const Accordion = ({
 
 ### 1. Accordion component
 
-- First of all we will create AccordionContext. 
+- First of all we will create AccordionContext. **currentAccordionIndex** state we
+  are taking for maintaining currently opened accordion 
+- **accordionHandler** is a handler which will be called on when we click on accordion.
+- It will accept the index of the accordion we clicked and set it to our state.
+
 ```tsx 
 const AccordionContext = createContext({
   currentAccordionIndex: 1,
@@ -115,13 +119,22 @@ const AccordionContext = createContext({
 })
 ```
 
+- **currentAccordionIndex** is a state that we are maintaining internally for hide/show 
+  accordion content.
+- In **accordionIndexHandler** we are checking if user clicked on same accordion or not and 
+  based on that we are updating the **currentAccordionIndex**.
+- Then after we are just passing the **state** and **handler** in our **AccordionContext** 
+  provider.
+
 ```tsx 
 export const Accordion = ({ children }: { children: ReactNode }) => {
   const [currentAccordionIndex, setShowAccordionIndex] = useState(1)
 
-  const accordionHandler = (index: number) => {
-    setShowAccordionIndex(index === currentAccordionIndex ? 0 : index)
-  }
+ const accordionIndexHandler = (index: number) => {
+    setShowAccordionIndex((prev) =>
+      index === currentAccordionIndex ? prev : index
+    )
+  } 
 
   return (
     <AccordionContext.Provider
@@ -132,6 +145,8 @@ export const Accordion = ({ children }: { children: ReactNode }) => {
   )
 }
 ```
+
+> we will split each section and make partition for better reading.
 
 <!-- - ![Example](./../../../Pictures/Screenshots/Screenshot%20from%202024-03-19%2023-13-40.png) -->
 
